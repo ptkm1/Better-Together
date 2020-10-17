@@ -1,0 +1,84 @@
+
+.clienteItem{
+  background: white;
+  width: 80%;
+  height: 85px;
+  border-radius: 15px;
+  margin: 10px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.clientePerfil{
+  width: max-content;
+  display: flex;
+  align-items: center;
+  color: #820E0E;
+}
+.thumbCliente{
+  background: #820E0E;
+      color: white;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  margin-right: 15px;
+  min-width: 50px;
+}
+
+.infos1, .infos2{
+  display: flex;
+  flex-direction: column;
+}
+.infos1, .infos2 span{
+  display: flex;
+  align-items: flex-start;
+  
+}
+.clienteInformacoes{
+  display: flex;
+  justify-content: space-around;
+  width: 70%;
+  font-weight: bold;
+  color: gray;
+}
+
+.scrollPage{
+  width: 100%;
+  height: 50vh;
+  overflow: scroll;
+}
+
+.scrollPage::-webkit-scrollbar {
+  display: none;
+}
+.scrollPage{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (max-width: 800px){
+  .clienteItem{
+    width: 100%;
+    margin: 0px;
+    margin-top: 20px;
+  }
+
+  .clientePerfil h3{
+    font-size: 0.7rem;
+  }
+  .clienteInformacoes .infos1, .infos2 span{
+    font-size: 0.7rem;
+  }
+
+  .clientePerfil .thumbCliente{
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    margin-right: 2px;
+  }
+}
+
