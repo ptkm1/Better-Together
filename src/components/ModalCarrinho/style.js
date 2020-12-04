@@ -15,8 +15,6 @@ export const Conteudo = styled.div`
     z-index: 10;
     position: fixed;
     width: 70%;
-    max-height: 85%;
-    overflow: auto;
     background: #F4F5F9;
     margin-top: 70px; 
     padding: 10px;
@@ -35,11 +33,9 @@ export const Conteudo = styled.div`
     @media (max-width: 425px){ 
         width: 80%;
     }
-
 `
 export const Card = styled.div`
     width: 100%;
-    margin: 2px;
 
     display: flex;
     flex-direction: row;
@@ -47,8 +43,8 @@ export const Card = styled.div`
 
 `
 export const Foto = styled.div`
-    width: 202px;
-    height: 160px;
+    width: 20%;
+    
 
     img{
         width: 100%;
@@ -58,16 +54,6 @@ export const Foto = styled.div`
         width: 140px;
         height: 112px;
     }
-
-    @media (max-width: 1024px){    
-        width: 140px;
-        height: 112px;
-    }
-
-    @media (max-width: 425px){ 
-        width: 100px;
-        height: 79px;
-    }
     @media (max-width: 768px){ 
         h1{   
             font-size: 1.5rem;
@@ -75,14 +61,18 @@ export const Foto = styled.div`
         p{
             font-size:1.2rem;
         }
+      
     }
     @media (max-width: 425px){ 
+        width: 100px;
+        height: 79px;
         h1{   
             font-size: 1.2rem;
         }  
         p{
             font-size:1.0rem;
         }
+        
     }
     @media (max-width: 320px){ 
         h1{   
@@ -92,11 +82,11 @@ export const Foto = styled.div`
             font-size:0.8rem;
         }
     }
-
 `
 export const Descricao = styled.div`
     width: 70%;
     padding: 10px;
+    word-break: break-all;
 
     p{
         color: #A6A6A6;
@@ -104,7 +94,7 @@ export const Descricao = styled.div`
         margin-top: 5px;
     }
     h1{
-        font-size: 2.0rem;
+        font-size: 20px;
         color: #820E0E;
         text-align: left;
     }
@@ -140,25 +130,11 @@ export const Quantidade = styled.div`
     justify-content: center;
     margin-right: 30px;
     margin-bottom: 25px;
+    padding-left: 50px;
 
-    input{
-        width: 80%;
-        height: 40px;
-        background: #F0F0F0;
-        border-radius: 9px;
-        border: none;
-        position: relative;
 
-        
-        padding-left: 30%;
-        font-size: large;
-        font-weight: 700;
-    }
-
-    h1{
-        color: #820E0E;
-        margin: 10px;
-        cursor: pointer;
+    @media (max-width: 425px){
+        display: none;
     }
 `
 
@@ -167,16 +143,13 @@ export const Preco = styled.div`
 
     display:flex;
     flex-direction: column;
-`
-export const MostraPreco = styled.div`
 
     h1{
-        font-size: 3.0rem;
+        font-size: 30px;
         color: #820E0E;
         text-align: left;
         margin-top: 10px;   
     }
-
     @media (max-width: 1024px){ 
         h1{   
             font-size: 2.5rem;
@@ -189,7 +162,7 @@ export const MostraPreco = styled.div`
     }
     @media (max-width: 425px){ 
         h1{   
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }  
     }
 `
@@ -227,4 +200,12 @@ export const LinkComprar = styled.div`
             margin-left: 2px;
         }
     }
+
+    @media(max-width: 768px){
+        margin-top: 10px;
+
+        span{
+            size: 15px;
+        }
+    } 
 `

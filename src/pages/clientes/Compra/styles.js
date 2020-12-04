@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Container = styled.div`
     width:90vw;
     height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -66,7 +65,6 @@ export const DadosCartao = styled.div`
 export const Direita = styled.div`
     height: 100%;
     width: 50%;
-
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -98,14 +96,14 @@ export const Cartao = styled.div`
     border-radius: 25px;
 `
 
+
+
 export const CarrinhoDeCompras = styled.div`
     width: 80%;
     height: 50%;
-
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-
     h1{
         color: #820e0e;
     }
@@ -124,6 +122,7 @@ export const Produto = styled.div`
         font-size: 18px;
         margin-top: 7px;
         width: 100%;
+        padding: 10px;
     }
     img{
         width: 65px;
@@ -132,14 +131,17 @@ export const Produto = styled.div`
         resize: both;
     }
     h2{
-        width: 20%;
+        width: 25%;
         font-size: 15px;
     }
-`
+    span{
+        padding: 10px;
+    }
+    
+` 
 
 export const InputsCartao = styled.div`
     width: 100%;
-
     input{
     padding: .3775rem .75rem;
     font-size: 1rem;
@@ -165,13 +167,11 @@ export const Form = styled.div`
     display: flex;
     align-items: center;
     margin: 10px;
-
     h3{
         z-index: 9;
         height: 100%;
         color: #C1C1C1;
     }
-
     input{
         width: 100%;
         height: 50px;
@@ -179,9 +179,7 @@ export const Form = styled.div`
         border-radius: 9px;
         border: none;
         position: relative;
-
         padding-left: 10px;
-
         :focus{
             outline: none;
         }
@@ -190,18 +188,15 @@ export const Form = styled.div`
 export const Baixo = styled.div`
     width: 100%;
     height: 70px;
-
     display: flex;
     justify-content: space-around;
 `
 
 export const Form2 = styled(Form)`
     width: 30%;
-
 `
 export const Form3 = styled(Form)`
     width: 70%;
-
 `
 export const Botao = styled.button`
     width: 93%;
@@ -213,7 +208,6 @@ export const Botao = styled.button`
     border: none;
     border: 3px solid #820E0E;
     margin-left: 4%;
-
     :hover{
         background: #820E0E;
         color: #fff;

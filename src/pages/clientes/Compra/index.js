@@ -1,36 +1,23 @@
-import React, { useEffect, useState } from "react";
-import api from "../../../service/api";
+import React, {useEffect,useState} from 'react';
+import api from '../../../service/api';
+//import Cleave from 'cleave.js/react';
+
+import axios from 'axios';
+
 import { IoIosBarcode, IoMdCard } from "react-icons/io";
 
-import axios from "axios";
 import Cards from 'react-credit-cards'
 import 'react-credit-cards/es/styles-compiled.css'
 
 //components
-import Navbar from "../../../components/menu/menu";
-import {
-  Container,
-  Compra,
-  PessoalInfo,
-  TituloSection,
-  DadosEntrega,
-  DadosCartao,
-  Direita,
-  Cartões,
-  Form,
-  Baixo,
-  Form2,
-  Form3,
-  InfoCartao,
-  InfoEndereco,
-  InputsCartao,
-  Produto,
-  CarrinhoDeCompras,
-  Botao,
-  PagBotao
-} from "./styles.js";
+import Navbar from '../../../components/menu/menu';
 
-export default function Comprar() {
+
+
+//style
+import { Container, Compra, PessoalInfo,TituloSection, DadosEntrega,DadosCartao, Direita, Cartao, Form, Baixo, Form2, Form3, InfoCartao, InfoEndereco, Botao, CarrinhoDeCompras, Produto, Cartões,InputsCartao,PagBotao } from './styles.js'
+
+export default function Comprar(){
   //Variáveis de estado, resgatados do storage
   const [user, setUser] = useState([]);
   const [endereco, setEndereco] = useState([]);
@@ -49,11 +36,11 @@ export default function Comprar() {
   const [referencia, setRef] = useState("");
   const [cep, setCep] = useState("");
   const [ruaNum, setRuaNum] = useState(0);
-  //Var de estado para Receber Resposta
+
   const [metodoPagamento, setMetodoPagamento] = useState("");
 
-  const [pagamento, setPagamento] = useState([]);
-  const [focus, setFocus] = useState("");
+    const [ pagamento, setPagamento ] = useState([]);
+    const [focus, setFocus] = useState("");
 
   //Criando Costumer
   const costumer = {
@@ -69,7 +56,7 @@ export default function Comprar() {
       },
     ],
     phone_numbers: [`+55${numeroTel}`, "+5511888889999"],
-    birthday: "2000-01-01",
+    birthday: "1965-01-01",
   };
 
   //Criando adress para usar em billing e shipping
@@ -104,6 +91,8 @@ export default function Comprar() {
     let precoSemPonto = preco + "";
     precoSemPonto = precoSemPonto.replace(".", "");
     precoSemPonto = parseInt(precoSemPonto);
+
+    
     return {
       id: `rb${e.id_produto}`,
       title: e.produto,
@@ -112,13 +101,24 @@ export default function Comprar() {
       tangible: true,
     };
   });
-  //Pegando o valor total
+
+ console.log(items)
+      
   let valorTotal = meusItems.map((e) => {
-    let qtdItem = e.quantity;
-    let precoItem = e.unit_price;
-    let precoTotal = qtdItem * precoItem;
-    return precoTotal;
-  });
+      
+      let qtdItem = e.quantity;
+      //console.log(qtdItem)
+
+      let precoItem = e.unit_price;
+      //console.log(precoItem)
+      
+      let precoTotal = qtdItem * precoItem;
+
+      return precoTotal;
+  })
+  
+  console.log({valorTotal: valorTotal,amount: meusItems} );
+
   //Resgatar informações do usuário salvos no storage
   useEffect(() => {
     const usuario = JSON.parse(localStorage.getItem("@btgther/usuario"));
@@ -150,9 +150,28 @@ export default function Comprar() {
     BuscarCep();
   }, []);
 
-  //const [cep, setCep] = useState("");
+  useEffect(()=>{
+    if(!pagamento){
+        return alert("tá pago!");
+    }else{
+        return;
+    }
+
+  },[pagamento])
+
 
   async function RealizarCompra() {
+    const valores = items.map((e) => {
+      return e.preco;
+    });
+    const total = valores.reduce(
+      (total, currentElement) => total + currentElement
+    );
+
+    let totalSemPonto = total + "";
+    totalSemPonto = totalSemPonto.replace(".", "");
+    totalSemPonto = parseInt(totalSemPonto);
+
     const total1 = valorTotal.reduce(
       (total1, currentElement) => total1 + currentElement
     );
@@ -171,21 +190,25 @@ export default function Comprar() {
         customer: costumer,
         billing: billing,
         shipping: shipping,
-        items: meusItems,
+        items: meusItems
       },{
-        infoEndereco:InfoEndereco,
-        numeroResidencia: numResid,
-        referencia: referencia,
-        nomeIdentificacao: nomeIdent,
+          infoEndereco:InfoEndereco,
+          numeroResidencia: numResid,
+          referencia: referencia,
+          nomeIdentificacao: nomeIdent
       });
-      alert(response.status);
+
+
+      console.log(valorTotal)
+      alert(response.status)
 
       return setPagamento(response);
     } catch (error) {
       console.log(error);
-      alert(error);
+      alert(error)
     }
   }
+
 
   async function PagarBoleto() {
     const total1 = valorTotal.reduce(
@@ -202,7 +225,7 @@ export default function Comprar() {
           payment_method: "boleto",
           postback_url: "localhost:8080/postbackboletos",
         });
-    
+
         console.log(response);
         console.log(response.data.transaction.boleto_url);
         /**
@@ -213,10 +236,11 @@ export default function Comprar() {
       }catch(erro){
         console.log(erro.response)
       }
-    
+
   }
+
   //Novos useStates
-  const [nomeIdent, setNomeIdent] = useState("");
+  const [ nomeIdent, setNomeIdent ] = useState('')
   
   return (
     <>
@@ -224,34 +248,39 @@ export default function Comprar() {
       <Container>
         <Compra>
           <PessoalInfo>
-            <TituloSection>
-              <h1>1</h1>
-              <h2>Informações pessoais</h2>
-            </TituloSection>
+          <TituloSection>
+          <h1>1</h1>
+          <h2>Informações pessoais</h2>
+        </TituloSection>
 
-            <Form>
-              <input
-                type="text"
-                placeholder="Nome de identificação"
-                onChange={(e) => setNomeIdent(e.target.value)}
-              />
-            </Form>
-            <Form>
-              <input
-                type="text"
-                placeholder="CPF"
-                onChange={(e) => setCpf(e.target.value)}
-              />
-            </Form>
+          <Form>
+                <input
+                  type="text"
+                  placeholder="Nome de identificação"
+                  onChange={(e) => setNomeIdent(e.target.value)}
+                />
+          </Form>
+          <Form>
+                <input
+                  type="text"
+                  placeholder="CPF"
+                  onChange={(e) => setCpf(e.target.value)}
+                />
+          </Form>
 
-            <Form>
-              <input
-                type="text"
-                placeholder="Telefone para contato"
-                onChange={(e) => setNumeroTel(e.target.value)}
-              />
-            </Form>
+          <Form>
+                <input
+                  type="text"
+                  placeholder="Telefone para contato"
+                  onChange={(e) => setNumeroTel(e.target.value)}
+                />
+          </Form>
+        
           </PessoalInfo>
+
+
+
+
 
           <DadosEntrega>
             <TituloSection>
@@ -259,76 +288,92 @@ export default function Comprar() {
               <h2>Dados de entrega</h2>
             </TituloSection>
 
-            <Form>
-              <input
-                type="text"
-                placeholder="CEP"
-                onChange={(e) => setCep(e.target.value)}
-              />
-            </Form>
-            <div style={{ display: "flex", width: "100%" }}>
+              <Form>
+                  <input
+                    type="text"
+                    placeholder="CEP"
+                    onChange={(e) => setCep(e.target.value)}
+                  />
+                </Form>
+                <div style={{display: "flex", width: "100%"}} >
+                <Form>
+                  <input
+                      type="text"
+                      placeholder="Complemento"
+                      style={{width:"100%"}}
+                  />
+                </Form>
+                <Form>
+                  <input
+                      type="text"
+                      placeholder="Número de residência"
+                      style={{width:"100%"}}
+                      onChange={(e) => setNumResid(e.target.value)}
+                  />
+                </Form>
+              </div>
+
               <Form>
                 <input
                   type="text"
-                  placeholder="Complemento"
-                  style={{ width: "100%" }}
+                  placeholder="Ponto de Referência"
+                  onChange={(e) => setRef(e.target.value)}
                 />
               </Form>
               <Form>
                 <input
                   type="text"
-                  placeholder="Número de residência"
-                  style={{ width: "100%" }}
-                  onChange={(e) => setNumResid(e.target.value)}
+                  placeholder="Cidade"
                 />
               </Form>
-            </div>
-
-            <Form>
-              <input
-                type="text"
-                placeholder="Ponto de Referência"
-                onChange={(e) => setRef(e.target.value)}
-              />
-            </Form>
-            <Form>
-              <input type="text" placeholder="Cidade" />
-            </Form>
-            <Form>
-              <input type="text" placeholder="Bairro" />
-            </Form>
-
-            <div style={{ display: "flex", width: "100%" }}>
               <Form>
+                <input
+                  type="text"
+                  placeholder="Bairro"
+                />
+              </Form>
+            
+              <div style={{display: "flex", width: "100%"}} >
+                <Form>
                 <input
                   type="text"
                   placeholder="Numero da rua"
-                  style={{ width: "100%" }}
+                  style={{width:"100%"}}
                   onChange={(e) => setRuaNum(e.target.value)}
                 />
               </Form>
+                <Form>
+                  <input
+                      type="text"
+                      placeholder="UF"
+                      style={{width:"100%"}}
+                  />
+                </Form>
+              </div>
               <Form>
-                <input type="text" placeholder="UF" style={{ width: "100%" }} />
+                <input
+                type="text"
+                placeholder="Nome da rua"
+                />
               </Form>
-            </div>
-            <Form>
-              <input type="text" placeholder="Nome da rua" />
-            </Form>
+
           </DadosEntrega>
+
 
           <DadosCartao>
             <TituloSection>
-              <h1>3</h1>
-              <h2>Dados do cartão</h2>
-            </TituloSection>
+            <h1>3</h1>
+            <h2>Dados do cartão</h2>
+          </TituloSection>
 
-            <Direita>
+
+          <Direita>
               <Cartões>
                 <PagBotao onClick={()=>setMetodoPagamento("cartao")}><IoMdCard size="25px" /></PagBotao>
                 <PagBotao onClick={()=>setMetodoPagamento("")}><IoIosBarcode size="25px" /></PagBotao>
               </Cartões>
               <InfoCartao>
-               
+
                 { metodoPagamento === "cartao" ?
                  (<InputsCartao>
                     <Cards 
@@ -385,17 +430,16 @@ export default function Comprar() {
                   ) 
                 : 
                 (<button onClick={()=>PagarBoleto()}>Gerar Boleto</button>) }
-                
-                
-                 
 
-                
+
+
+
+
               </InfoCartao>
             </Direita>
           </DadosCartao>
-          
         </Compra>
-        
+
         <CarrinhoDeCompras>
           <h1>Produtos no carrinho</h1>
             {items.map(e=>{
@@ -408,13 +452,14 @@ export default function Comprar() {
                     </div>
                     <ul>
                     <h2>Qtd: {e.quantidade}</h2>
-                    <h2>Preço: {e.preco}</h2> 
+                    <h2>Preço: {e.preco.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</h2> 
                     </ul>
                 </Produto>
               )
             })}
-            
+
         </CarrinhoDeCompras>
+          
       </Container>
     </>
   );

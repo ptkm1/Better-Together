@@ -7,6 +7,10 @@ export const Container = styled.footer`
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
+    position: relative;
+    @media(max-width: 425px){
+        margin-top: 50px;
+    }
    
 `
 
@@ -109,12 +113,10 @@ export const EsquerdaBaixo = styled.div`
         width: 70px;
         margin: 10px;
         margin-left: 10px;
-
         
         @media(max-width: 425px){
             width: 80%;
         }
-
     }
 `
 export const CentroBaixo = styled.div`

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useContext, useEffect,useState} from 'react';
 import Navbar from '../../../components/menu/menu';
-import Footer from '../../../components/footer/footer';
 import { IoIosCalculator} from "react-icons/io";
 //css
 import './style.css';
@@ -27,7 +26,8 @@ export default function Produto() {
       try{
         const data = await api.get(`/produto/${splitURL[4]}`)
         const aiui = data.data;
-        setProduto([aiui]);
+        setProduto(aiui);
+
       }catch(err){
         console.log(err);
       }
@@ -44,7 +44,8 @@ export default function Produto() {
   //SETTER
   function Comprar(){
     if(parseCarrinho === null){
-      produto[0].quantidade = qtd;    
+      produto[0].quantidade = qtd;
+      
       localStorage.setItem('@btgther/carrinho', JSON.stringify(produto));
     }
     if(parseCarrinho != null){
@@ -53,30 +54,28 @@ export default function Produto() {
         item.push(produto[0])
       localStorage.setItem('@btgther/carrinho', JSON.stringify(item));
     }
+
     alert("Produto adicionado ao carrinho!!");  
   }
-/*
-  //Atualizador do qtd
-  useEffect(()=>{
-    const button = document.querySelector(".button-produto-add")
+  
 
-    button.addEventListener("click", () =>{ qtd = 1 })
-  },[]);*/
 
   return (
     <>
       <Navbar />
       <div className="produto-container">
        {
+         //.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
          produto.map(e =>{
           let preco = e.preco
+          console.log(produto)
           let total = preco * qtd;
-
+          console.log(e)
            return(
             <div className="produto-content">
             <div className="produto-esquerda">
               <div className="foto-produto">
-                <img src={e.img} alt="teste"/>
+                <img src={e.images} alt="teste"/>
               </div>
               <div className="descricao-produto">
                 <h1>{e.produto}</h1>
@@ -108,8 +107,7 @@ export default function Produto() {
                   </div>
                 </div>
                 <div className="button-container">
-                  <button className="button-produto"><h2>Comprar</h2></button>
-                  <button onClick={()=>Comprar()}  className="button-produto-add"><h2>Adicionar ao carrinho</h2></button>
+                  <button onClick={()=>Comprar()} className="button-produto-add"><h2>Adicionar ao carrinho</h2></button>
                 </div>
               </div>
             </div>
@@ -118,7 +116,6 @@ export default function Produto() {
          })
        }
       </div>
-      <Footer />
     </>
   );
 }

@@ -12,18 +12,19 @@ import {FaInfoCircle, FaShoppingCart} from 'react-icons/fa';
 //Modal
 import Modal from '../ModalCarrinho/modalCarrinho';
 import { useState } from 'react';
-import { useEffect } from 'react';
-
-//Responsivo
-import MenuResponsivo from '../menuResponsivo/menu';
 
 //Context
 import Context from '../../contexts/auth';
 import { IoIosLogIn, IoIosLogOut,IoIosPerson, IoMdPersonAdd } from 'react-icons/io';
 
+//Menu Responsivo
+import  MenuResponsivo  from '../menuResponsivo/menu';
+
 export default function Navbar() {
+
   const { logado, usuario } = useContext(Context);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  console.log(usuario)
 
   function Deslogar(){
     localStorage.clear();
@@ -34,13 +35,12 @@ export default function Navbar() {
   return (
     <>
       <MenuResponsivo />
-      <nav>
+      <div className="nav-menu">
         
         <div className="ladoEsquerdo">
         <Link to='/' ><img src={Logo} alt="Logo"/></Link>
         </div>
         <div className="ladoDireito">
-                  
                   
                   <div className="botoes">
                       <Link to="/sobre" className="btnNav">
@@ -61,7 +61,7 @@ export default function Navbar() {
                  { logado ? ( <div className="perfil">
               <h4>{usuario.nome}</h4>
               <div className="circle">
-                <img src={Perfil} alt="Perfil foto"/>
+                <img src={usuario.img} alt="Perfil foto"/>
               </div>
 
               <div className="dropdown">
@@ -76,11 +76,10 @@ export default function Navbar() {
               <Link className="BotoesLogin" to="/cadastro"> <IoMdPersonAdd size="25px" /> Cadastrar</Link> 
             </div>
 
-             )}   
-                     
+             )}           
             
         </div>        
-      </nav>
+      </div>
        {isModalVisible ? <Modal onClose={() => setIsModalVisible(false)} /> : null}
     </>
   );

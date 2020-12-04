@@ -16,7 +16,7 @@ export function AuthProvider({children}){
     const token = localStorage.getItem('@btgther/token')
     if(usuario && token){setUsuario(JSON.parse(usuario));}
   }
-
+  
   function verifyAdm(){
     const usuario = localStorage.getItem('@btgther/usuarioADM')
     const token = localStorage.getItem('@btgther/tokenADM')
@@ -30,10 +30,8 @@ export function AuthProvider({children}){
   //Função de Login
   async function Autenticar(){
     try{
-      const {data} = await api.post('/login', {
-        email:email,
-        senha:senha
-      })
+      const {data} = await api.post('/login', {email:email,senha:senha})
+      console.log(data)
 
       localStorage.setItem('@btgther/usuario', JSON.stringify(data.usuario))
       localStorage.setItem('@btgther/token', data.token)
@@ -43,7 +41,7 @@ export function AuthProvider({children}){
 
   async function AutenticarAdm(){
     try{
-      const {data} = await api.post('/admin/login', {email:emailAdmin, senha: senhaAdmin})
+      const {data} = await api.post('/login-Admin', {email:emailAdmin, senha: senhaAdmin})
 
       localStorage.setItem('@btgther/usuarioADM', JSON.stringify(data.usuario))
       localStorage.setItem('@btgther/tokenADM', data.token)
