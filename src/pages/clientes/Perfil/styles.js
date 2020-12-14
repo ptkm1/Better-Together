@@ -63,6 +63,9 @@ img{
     height: 95%;
     border: solid white 4px;
     border-radius: 100%;
+    display: block;
+    height: 155px;
+    width: 155px;
 }
 `
 export const Esquerda = styled.div`

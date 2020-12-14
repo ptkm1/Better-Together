@@ -22,11 +22,11 @@ const [pedidos, setPedidos] = useState([]);
       
       async function getApi(){
         try{
-          const req = await api.get(`/pedido`)
-          console.log(req)
+          const req = await api.get(`/pagarme-todastransacoes`)
+          
           return setPedidos(req.data);
         }catch(error){
-          console.log(error)
+          console.error(error)
         }
       }
       getApi();

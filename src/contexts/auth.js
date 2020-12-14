@@ -31,12 +31,15 @@ export function AuthProvider({children}){
   async function Autenticar(){
     try{
       const {data} = await api.post('/login', {email:email,senha:senha})
-      console.log(data)
 
+      //alert(data.response.message)
       localStorage.setItem('@btgther/usuario', JSON.stringify(data.usuario))
       localStorage.setItem('@btgther/token', data.token)
       return window.location.href = "/"
-    }catch(error){console.log(error);}
+    }catch(error){
+      alert(error.message)
+      alert('Os dados digitados estão errados')
+    }
   }
 
   async function AutenticarAdm(){
@@ -50,7 +53,7 @@ export function AuthProvider({children}){
 
 
     }catch(error){
-      console.log(error)
+      alert(error.response.data.mensagem)
     }
   }
 
@@ -70,7 +73,7 @@ export function AuthProvider({children}){
        const aiui = data.data;
         setProduto([aiui]);
      }catch(err){
-        console.log(err);
+        alert(err)
      }
     }
    getApi();

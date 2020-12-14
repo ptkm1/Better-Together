@@ -24,17 +24,16 @@ export default function Home() {
     async function getApi(){
       try{
         const req = await api.get(`/produto`)
-        console.log(req)
+
         return setProdutos(req.data);
       }catch(error){
-        console.log(error)
+        console.error(error)
       }
 
     }
     getApi();
   },[])
 
-  console.log(produtos)
 
   return (
     <>

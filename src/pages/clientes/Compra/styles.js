@@ -184,6 +184,7 @@ export const Form = styled.div`
             outline: none;
         }
     }
+    
 `
 export const Baixo = styled.div`
     width: 100%;

@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react';
 import { BiFace,BiHomeAlt,BiDollarCircle,BiMap,BiCar, BiPackage } from "react-icons/bi";
-import { IoMdCalendar,IoIosExit,IoMdCash, IoMdBarcode,IoMdShareAlt } from "react-icons/io";
+import { IoMdCalendar,IoIosExit,IoMdCash, IoMdBarcode,IoMdShareAlt, IoMdClock } from "react-icons/io";
 import { FaBoxOpen } from "react-icons/fa";
 import { GrStatusGood } from "react-icons/gr";
 import { BsCalendarFill } from "react-icons/bs";
@@ -128,7 +128,7 @@ export default function Dashboard() {
           <div className="direta">
             <div className="perfilDash">
               <div className="circleDash"></div>
-              <h2>{/*usuarioLogado.nome*/}</h2>
+              <h2>{usuarioLogado.nome}</h2>
               <h3> <IoIosExit className="exitbtn" size="23px" color="#820E0E" onClick={()=>Deslogar()} /> </h3>
             </div>
           </div>
@@ -145,12 +145,12 @@ export default function Dashboard() {
               <h1 style={{color: '#820E0E', fontSize: 20}}>Ultimos pedidos</h1>
 
             <div className="pedidoslista" style={{overflow:"auto", maxHeight:"450px"}} >
-              { pedidos.map(e=>{
+              {/* { pedidos.map(e=>{
                 return(
                 <div key={e.id} className="itemLista">
                   <div className="top">
                     <div className="nome">
-                    <h2 style={{marginRight:10}}>{/*e.thumb*/}</h2>
+                    <h2 style={{marginRight:10}}>{//e.thumb}</h2>
                     <h3 style={{color: '#820E0E'}}>{ e.customer.name }</h3>
                     </div>
                   </div>
@@ -172,6 +172,7 @@ export default function Dashboard() {
                       </div>
                     <div className="total">
                           <IoMdCash size="25px" color="green"/>
+                          
                           <h3>{e.items.map(e=>(e.unit_price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})))}</h3>
                     </div>
                   </div>
@@ -181,7 +182,45 @@ export default function Dashboard() {
                   </div>     
                 </div>
                 )
-                }) }
+                }) } */}
+
+                {
+                   data.map(e=>{
+                    //Aqui chamaremos na api, os ultimos pedidos
+                    return(
+                  <div key={e.id} className="itemLista">
+                  <div className="top">
+                    <div className="nome">
+                    <h2 style={{marginRight:10}}>{e.thumb}</h2>
+                    <h3 style={{color: '#820E0E'}}>{e.nome}</h3>
+                    </div>
+                  </div>
+  
+                  <div className="bottom">
+                  <div className="infos">
+                      <div className="infoitems">
+                          <span><BiMap />{e.local}</span>
+                          <span><BiPackage />{e.status}</span>
+                      </div>
+                  <div className="infoitems">
+                          <span><IoMdClock />{e.hora}</span>
+                          <span><IoMdBarcode />{e.codigo}</span>
+                      </div>
+                    <div className="infoitems">
+                        <span><IoMdShareAlt />{e.frete}</span>
+                        <span><BiCar />{e.transportadora}</span>
+                    </div>
+                      </div>
+                    <div className="total">
+                          <IoMdCash size="25px" color="green"/>
+                          <h3>{e.valorTotal}</h3>
+                    </div>
+                  </div>
+  
+                </div>
+                    )
+                  }) 
+                }
               </div>
             </div>
 
@@ -216,16 +255,7 @@ export default function Dashboard() {
                       
                   </div>
 
-                  <div className="cardEst">
-                      <div className="dirCard">
-                        <h4>Público comum</h4>
-                        <h5 style={{marginTop:10, marginBottom: 10 }}>Feminino</h5>
-                        <h5>Masculino</h5>
-                      </div>
-                      <div className="esqCard">
-                        <img src={Graph} alt="grafico"/>
-                      </div>
-                  </div>
+                  
               </div>
         </div>
       </div>

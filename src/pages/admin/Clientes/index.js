@@ -89,7 +89,7 @@ export default function Clientes() {
                   <div className="thumbCliente">
                     <h3>{e.img}</h3>
                   </div>
-                    <h3>{e.nome}</h3>
+                    <h3>{e.cliente}</h3>
             </div>
             <div className="clienteInformacoes">
                 <div className="infos1">

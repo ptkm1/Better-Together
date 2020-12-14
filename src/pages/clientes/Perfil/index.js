@@ -17,14 +17,16 @@ import PerfilFoto from '../../../assets/perfilgrande.png';
 import { IoIosCube } from 'react-icons/io';
 import { FaUserCircle } from 'react-icons/fa';
 import { BiFace,BiHomeAlt,BiDollarCircle,BiMap,BiCar, BiPackage } from "react-icons/bi";
-import { IoMdCalendar,IoIosExit,IoMdCash, IoMdBarcode,IoMdShareAlt } from "react-icons/io";
+import { IoMdCalendar,IoIosExit,IoMdCash, IoMdBarcode,IoMdShareAlt, IoMdClock } from "react-icons/io";
 import { FaBoxOpen } from "react-icons/fa";
 import { GrStatusGood } from "react-icons/gr";
 import { BsCalendarFill } from "react-icons/bs";
 import { AiFillDollarCircle } from "react-icons/ai";
 
-import api from '../../../service/api';
 
+
+import api from '../../../service/api';
+import data from '../../admin/Dashboard/api';
 
 export default function Perfil(){
 
@@ -38,12 +40,15 @@ export default function Perfil(){
             const req = await api.get('/pagarme-todastransacoes')
         
             setPedidos(req.data.map(pedidos=>pedidos));
-            
             return
         }catch(error){
-            console.log(error)
+            console.error(error)
         }
         }
+
+
+
+
         getApi();
     },[])
 
@@ -59,7 +64,7 @@ export default function Perfil(){
                         </div>
                     </DireitaHeader>
                     <CentroHeader>
-                        <img src={PerfilFoto} alt="perfil" />
+                        <img src={usuario.img} alt="perfil" />
                     </CentroHeader>
                 </Header>
                 <Conteudo>
@@ -79,13 +84,13 @@ export default function Perfil(){
                     </Esquerda>
                     <Direita>
                         <h1>Pedidos:</h1>
-                        <div className="pedidoslista" style={{overflow:"scroll", maxHeight:"450px"}} >
-                            { pedidos.map(e=>{
+                        <div className="pedidoslista" style={{overflow:"auto", maxHeight:"650px"}} >
+                            {/* pedidos.map(e=>{
                                 return(
                                 <div key={e.id} className="itemLista">
                                 <div className="top">
                                     <div className="nome">
-                                    <h2 style={{marginRight:10}}>{/*e.thumb*/}</h2>
+                                    <h2 style={{marginRight:10}}>{//e.thumb}</h2>
                                     <h3 style={{color: '#820E0E'}}>{ e.customer.name }</h3>
                                     </div>
                                 </div>
@@ -112,7 +117,50 @@ export default function Perfil(){
                                 </div>
                                 </div>
                                 )
-                                }) }
+                                }) */}
+
+
+
+
+{
+                   data.map(e=>{
+                    //Aqui chamaremos na api, os ultimos pedidos
+                    return(
+                  <div key={e.id} className="itemLista">
+                  <div className="top">
+                    <div className="nome">
+                    <h2 style={{marginRight:10}}>{e.thumb}</h2>
+                    <h3 style={{color: '#820E0E'}}>{e.nome}</h3>
+                    </div>
+                  </div>
+  
+                  <div className="bottom">
+                  <div className="infos">
+                      <div className="infoitems">
+                          <span><BiMap />{e.local}</span>
+                          <span><BiPackage />{e.status}</span>
+                      </div>
+                  <div className="infoitems">
+                          <span><IoMdClock />{e.hora}</span>
+                          <span><IoMdBarcode />{e.codigo}</span>
+                      </div>
+                    <div className="infoitems">
+                        <span><IoMdShareAlt />{e.frete}</span>
+                        <span><BiCar />{e.transportadora}</span>
+                    </div>
+                      </div>
+                    <div className="total">
+                          <IoMdCash size="25px" color="green"/>
+                          <h3>{e.valorTotal}</h3>
+                    </div>
+                  </div>
+  
+                </div>
+                    )
+                  }) 
+                }
+
+
                             </div>
 
                     </Direita>

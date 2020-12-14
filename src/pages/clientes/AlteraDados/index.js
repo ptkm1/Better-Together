@@ -25,8 +25,32 @@ import api from '../../../service/api';
 export default function Perfil(){
 
     const { usuario } = useContext(Context);
-    const usuarioCep = JSON.parse(localStorage.getItem('@btgther/usuario'));
-    console.log(usuario)
+
+    const [ nome, setNome ] = useState(usuario.nome);
+    const [ senha, setSenha ] = useState();
+    const [ email, setEmail ] = useState(usuario.email);
+    const [ cep, setCep ] = useState(usuario.cep);
+    
+
+
+        async function Update(){
+            const {data} = await api.put('/cliente', {
+                id: usuario.endereco.id_cliente,
+                nome,
+                email
+            })
+
+            alert(data.message);
+
+            if(senha){
+                const {data} = await api.put('/cliente',{
+                    id: usuario.endereco.id_cliente,
+                    senha: senha
+                })
+                alert(data.message)
+            }
+        }
+
 
     return(
         <>
@@ -40,7 +64,7 @@ export default function Perfil(){
                         </div>
                     </DireitaHeader>
                     <CentroHeader>
-                        <img src={PerfilFoto} alt="perfil" />
+                        <img src={usuario? usuario.img : PerfilFoto} alt="perfil" />
                     </CentroHeader>
                 </Header>
                 <Conteudo>
@@ -63,32 +87,34 @@ export default function Perfil(){
 
                         <AlterContainer>
                             <h2>Nome:</h2>
-                            <input type="text" name="nome" placeholder={usuario.nome} /*onChange={ e => setNome(e.target.value) }*//>
-                            <BotaoAlt><span><GiSave /></span></BotaoAlt>
+                            <input type="text" name="nome" value={nome} onChange={ e => setNome(e.target.value) } />
+                            
                         </AlterContainer>
 
                         <AlterContainer>
                             <h2>Email:</h2>
-                            <input type="email" name="email" placeholder={usuario.email} /*onChange={ e => setEmail(e.target.value) }*//>
-                            <BotaoAlt><span><GiSave /></span></BotaoAlt>
+                            <input type="email" name="email" value={email} onChange={ e => setEmail(e.target.value) } />
+                            
                         </AlterContainer>
 
                         <AlterContainer>
                             <h2>CEP</h2>
-                            <input type="text" name="cep" placeholder={usuario.cep} /*onChange={ e => setCep(e.target.value) }*//>
-                            <BotaoAlt><span><GiSave /></span></BotaoAlt>
+                            <input type="text" name="cep" value={cep} onChange={ e => setCep(e.target.value) } />
+                            
                         </AlterContainer>
 
                         <h1>Alterar senha:</h1>
 
                         <AlterContainer>
                             <h2>Senha atual:</h2>
-                            <input type="password" name="senha" /*onChange={ e => setSenha(e.target.value) }*//>
+                            <input type="password" name="senha" />
                         </AlterContainer>                        
                         <AlterContainer>
                             <h2>Nova senha:</h2>
-                            <input type="password" name="senha"  /*onChange={ e => setSenha(e.target.value) }*//>
+                            <input type="password" name="senha"  onChange={ e => setSenha(e.target.value) } />
                         </AlterContainer>
+
+                        <button onClick={()=> Update()} >Alterar</button>
                     </Direita>
                 </Conteudo>
             </Container>

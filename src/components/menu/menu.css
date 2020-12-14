@@ -50,8 +50,9 @@
   margin-right: 3px;
 }
 .circle img{
-  resize: both;
-  width: 50px;
+  display: block;
+  height: 45px;
+  width: 45px;
   border: solid white 1px;
   border-radius: 100%;
   margin-left: 5px;
@@ -78,7 +79,7 @@
 .BotoesLogin{
   background: #FFFFFF;
   border-radius: 9px;
-  width: 100px;
+  width: 105px;
   padding: 10px;
   margin: 8px;
   color: #820E0E;
@@ -89,6 +90,11 @@
   align-items: center;
 }
 
+.BotoesLogin span{
+  font-size: 15px;
+  margin: 5px;
+}
+
 
 .loginEcadastro{
   display: flex;
@@ -97,8 +103,8 @@
 
 .dropdown{
   position: absolute;
-  margin-top: 133px;
-  margin-left: -10px;
+  margin-top: 127px;
+  margin-left: -1%;
   border-radius: 0 0 15px 15px;
   background-color: #820E0E;
   width: 250px;

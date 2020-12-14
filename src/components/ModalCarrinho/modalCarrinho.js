@@ -36,12 +36,11 @@ const Modal = ({ id = 'modal' ,onClose = () => {}}) => {
 
     function FinalizarCompra(){
         let item = JSON.parse(localStorage.getItem('@btgther/carrinho'));
-     
+
 
         if(item){
-            const valores = item.map((e)=>{return e.preco;});
-        
-            console.log(valores);
+            const valores = item.map((e)=>{return e.preco * e.quantidade;});
+
     
             if(valores.length === 0){
                 alert("Nenhum item no carrinho, impossível finalizar compra")
@@ -64,11 +63,11 @@ const Modal = ({ id = 'modal' ,onClose = () => {}}) => {
         atualizador();  
     },[])
 
-    useEffect(()=>{
-        if(statusCarrinho == null){
-            console.log("carrinho ta vazio")
-        }
-    },[])
+    // useEffect(()=>{
+    //     if(statusCarrinho == null){
+    //         alert("carrinho ta vazio")
+    //     }
+    // },[])
 
   
     

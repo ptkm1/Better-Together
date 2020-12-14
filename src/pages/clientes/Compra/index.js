@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import {useHistory} from 'react-router-dom';
 import api from "../../../service/api";
@@ -192,10 +193,10 @@ export default function Comprar() {
     let valorTotalSemPonto = total1 + "";
     valorTotalSemPonto = valorTotalSemPonto.replace(".", "");
     valorTotalSemPonto = parseInt(valorTotalSemPonto);
-
+    
     try {
       const response = await api.post("/pagarme-cartao", {
-        amount: valorTotalSemPonto,
+        amount: parseInt(valorTotalSemPonto),
         card_number: numeroCartao,
         card_cvv: cvv,
         card_expiration_date: dataExpiracao,
@@ -234,24 +235,23 @@ export default function Comprar() {
           amount: valorTotalSemPonto,
           costumer:costumer,
           payment_method: "boleto",
-          postback_url: "localhost:8080/postbackboletos",
+          postback_url: "http://testenode-1.herokuapp.com/postbackboletos",
         });
     
-        console.log(response);
-        console.log(response.data.transaction.boleto_url);
+
         /**
          * response.data.transaction <- Objeto resposta após gerado o boleto.
          * response.data.transaction.boleto_url <- Url do boleto, para ver o boleto em sí.
          */
+        window.open(response.data.transaction.boleto_url)
         alert("Boleto gerado, olhar o console, e falta aplicar o redirect para o boleto url")
       }catch(erro){
-        console.log(erro.response)
+        alert(erro.message)
       }
     
   }
   //Novos useStates
   const [nomeIdent, setNomeIdent] = useState("");
-
 
   
   return (
@@ -280,6 +280,8 @@ export default function Comprar() {
               />
             </Form>
 
+
+            
             <Form>
               <input
                 type="text"
@@ -301,8 +303,18 @@ export default function Comprar() {
                 placeholder="CEP *SEM TRAÇO*"
                 onChange={(e) => setCep(e.target.value)}
               />
-              <button onClick={()=> frete()}>frete</button>
             </Form>
+
+
+           
+            <Form>
+                <input style={{ width:"35px", margin:"5px" }} type="checkbox" /><span style={{ color:"grey"}}>Sedex</span>
+                <input style={{ width:"35px", margin:"5px", marginLeft: "10px" }} type="checkbox" /><span style={{ color:"grey"}}>PAC</span>
+            </Form>
+
+
+
+
             <div style={{ display: "flex", width: "100%" }}>
               <Form>
                 <input

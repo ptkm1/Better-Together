@@ -16,10 +16,11 @@ export const Container = styled.footer`
 
 export const Cima = styled.div`
     width: 100%;
-    height: 70%;
+    height: 160px;
     background: #820E0E;
     display: flex;
     flex-direction: row;
+
     @media(max-width: 425px){
         flex-direction: column-reverse;
     }
@@ -39,7 +40,7 @@ export const Esquerda = styled.div`
     padding-bottom: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     
     h4{
         padding-left: 20px;
@@ -86,7 +87,7 @@ export const Direita = styled.div`
     padding-bottom: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     
     h4{
         padding-left: 40px;

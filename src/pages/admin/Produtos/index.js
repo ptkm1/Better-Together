@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import { BiFace,BiHomeAlt,BiLayerPlus, BiPackage,BiBullseye } from "react-icons/bi";
-import { IoIosAddCircle,IoIosExit,IoIosBuild} from "react-icons/io";
+import { IoIosAddCircle,IoIosExit,IoIosBuild, IoIosCheckmarkCircle} from "react-icons/io";
 import {FaTrash} from 'react-icons/fa';
 import {Link} from 'react-router-dom';
 import './style.css'
@@ -27,6 +27,11 @@ export default function AddProdutos() {
 
 
   const [usuarioLogado , setUsuarioLogado ] = useState([])
+  const [ metas, setMeta ] = useState()
+
+  //  const [ tituloMeta, setTituloMeta ] = useState('')
+  //  const [ descricaoMeta, setDescricaooMeta ] = useState('')
+  //  const [ valor, setValor ] = useState('')
 
   useEffect(()=>{
     async function buscaUser(){
@@ -39,15 +44,52 @@ export default function AddProdutos() {
       }
     }
 
+
     buscaUser()
   },[])
+
+  useEffect(() => {
+    async function buscaMetas(){
+      try {
+        const {data} = await api.get('/metas')
+        setMeta(data.metas);
+      } catch (error) {
+        alert(error)
+      }
+    }
+    buscaMetas()
+  }, [metas])
+  
+
+  async function DeletarMetas(id){
+    const {data} = await api.delete(`/metas/${id}`)
+
+    alert(data.message)
+  }
+
+
+
+  async function AddMetas(){
+
+    let titulo = window.prompt('Digite um titulo')
+    let descricao = window.prompt('Digite uma Descrição breve')
+    let valor = window.prompt('Digite um valor')
+
+    const {data} = await api.post('/metas', {
+      titulo:titulo,
+      descricao: descricao,
+      valor: valor
+    })
+
+    alert(data.message);
+  }
 
   function Deslogar(){
     localStorage.clear();
     return window.location.href = "/"
   }
   //Para o componente de metas (por enquanto estático);
-  const meta = false;
+
 
   return (
     <>
@@ -85,13 +127,14 @@ export default function AddProdutos() {
             { produtos.map(e=>{
               //Aqui chamaremos na api, os produtos
 
+
               return(
                 
               <div key={e.id} className="produto" >
                 <BiPackage size="73px" />
                 <h1>{e.produto}</h1>
                   <Link to={`/editar/${e.id}`}>
-                    <IoIosBuild size="20px" />
+                    <IoIosBuild size="20px" color="#820E0E" />
                   </Link>
                   <FaTrash style={{cursor: 'pointer'}} onClick={()=>DeletarProduto(e.id)} size="20px" />
               </div>
@@ -107,22 +150,34 @@ export default function AddProdutos() {
                     <div className="dirCard">
                       <h4>Metas</h4>
                       <BiBullseye size="50px" />  
-                      { meta ? <div><h1>Meta</h1></div> : <span>Nenhuma meta ainda</span> }
+                      { metas ? (<div>
+                        {metas.map(e=>{
+                          return (
+                            <>
+                            <div style={{display: 'flex', width: "100%"}}>
+                              <div key={e.id} style={{borderBottom: '2px #820E0E solid', display: 'flex',flexDirection:'column', width: "100%",flexWrap: 'wrap'}}>
+                              <h2>{e.titulo}</h2>
+                              <p>{e.descricao}</p>
+                              </div>
+                              <div>
+                                <span onClick={()=>DeletarMetas(e.id)} style={{cursor: "pointer"}}><IoIosCheckmarkCircle size="24px" /></span>
+                              </div>
+                            </div>
+                            </>
+                          )
+                        })}
+                      </div>) : <span>Nenhuma meta ainda</span> }
                       <Link className="addMeta">
                       <span><BiLayerPlus /></span>
-                      <span>Adicionar nova meta</span>
+                      <span onClick={()=>AddMetas()}>Adicionar nova meta</span>
                       </Link>
-                    </div>
-
-                    <div className="esqCard">
-                      <h3>150 R$</h3>
                     </div>
                 </div>
 
                 <div className="cardEst">
                     <div className="dirCard">
                       <h4>Produtos mais vendidos</h4>
-                      
+                      <span style={{fontSize: 11, paddingTop: 15}}>Não foi possível realizar<br></br> uma estatística ainda</span>
                       {/*data.map(e=>{
                         //Aqui chamaremos da api de estatisticas do produto
                         return(<span>{e.nome}</span>)

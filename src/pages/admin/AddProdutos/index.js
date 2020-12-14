@@ -54,7 +54,7 @@ export default function AddProdutos() {
 
 
     }catch(error){
-      console.log(error)
+      alert("Algo está errado, verifique com calma os campos.")
     }
 
   }
