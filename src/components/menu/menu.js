@@ -50,7 +50,7 @@ export default function Navbar() {
 
                       <Link to="/" className="btnNav">
                         <div className="buttonNav">                        
-                              <h4>Home</h4>
+                              <h4>Início</h4>
                               <FaHome />                        
                         </div>
                       </Link> 
