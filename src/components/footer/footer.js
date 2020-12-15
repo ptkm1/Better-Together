@@ -22,7 +22,7 @@ export default function Footer(){
 
                     </Esquerda>
                     <Centro>
-                        <h3>CNPJ:00.000.000/0000-00</h3>
+                        <h3>CNPJ:37.567.527/0001-02</h3>
                     </Centro>
                     <Direita>
                         <h4>Better Together:</h4>
